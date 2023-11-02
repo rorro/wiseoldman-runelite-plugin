@@ -354,9 +354,11 @@ public class WomUtilsPlugin extends Plugin
 			.panel(womPanel)
 			.build();
 
-		clientToolbar.addNavigation(navButton);
+		if (config.showSidePanelOption())
+		{
+			clientToolbar.addNavigation(navButton);
+		}
 		overlayManager.add(codeWordOverlay);
-
 		clientThread.invoke(this::saveCurrentLevels);
 	}
 
@@ -606,7 +608,7 @@ public class WomUtilsPlugin extends Plugin
 			offset--;
 		}
 
-		if (addMenuLookup)
+		if (addMenuLookup && config.showSidePanelOption())
 		{
 			client.createMenuEntry(-offset)
 				.setTarget(event.getTarget())
@@ -668,7 +670,7 @@ public class WomUtilsPlugin extends Plugin
 		}
 
 		menuManager.removePlayerMenuItem(LOOKUP);
-		if (config.playerLookupOption())
+		if (config.playerLookupOption() && config.showSidePanelOption())
 		{
 			menuManager.addPlayerMenuItem(LOOKUP);
 		}
@@ -711,6 +713,17 @@ public class WomUtilsPlugin extends Plugin
 		{
 			alwaysIncludedOnSync.clear();
 			alwaysIncludedOnSync.addAll(SPLITTER.splitToList(config.alwaysIncludedOnSync()));
+		}
+
+		if (event.getKey().equals("showSidePanelOption")) {
+			if (config.showSidePanelOption())
+			{
+				clientToolbar.addNavigation(navButton);
+			}
+			else
+			{
+				clientToolbar.removeNavigation(navButton);
+			}
 		}
 	}
 

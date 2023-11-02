@@ -12,32 +12,48 @@ import net.runelite.client.config.Units;
 public interface WomUtilsConfig extends Config
 {
 	@ConfigSection(
+		name = "General",
+		description = "General configurations",
+		position = 1
+	)
+	String generalConfig = "generalConfig";
+
+	@ConfigSection(
 		name = "Group",
 		description = "The group configurations",
-		position = 1
+		position = 2
 	)
 	String groupConfig = "groupConfig";
 
 	@ConfigSection(
 		name = "Lookup",
 		description = "Lookup menu option configurations",
-		position = 2
+		position = 3
 	)
 	String lookupConfig = "lookupConfig";
 
 	@ConfigSection(
 		name = "Competitions",
 		description = "Competition configurations",
-		position = 3
+		position = 4
 	)
 	String competitionConfig = "competitionConfig";
 
 	@ConfigSection(
 		name = "Event codeword",
 		description = "Event codeword configurations",
-		position = 4
+		position = 5
 	)
 	String eventCodeword = "eventCodeword";
+
+	@ConfigItem(
+		keyName = "showSidePanelOption",
+		name = "Show side panel",
+		description = "Show the side panel containing player information on WOM lookup",
+		position = 0,
+		section = generalConfig
+	)
+	default boolean showSidePanelOption() { return true; }
 
 	@ConfigItem(
 		keyName = "playerLookupOption",
