@@ -696,6 +696,8 @@ public class WomUtilsPlugin extends Plugin
 			return;
 		}
 
+		womClient.fetchMetrics();
+
 		menuManager.removePlayerMenuItem(LOOKUP);
 		if (config.playerLookupOption())
 		{

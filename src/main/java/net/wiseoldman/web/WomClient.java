@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import java.util.Set;
 import net.wiseoldman.WomUtilsPlugin;
 import net.wiseoldman.beans.GroupInfoWithMemberships;
+import net.wiseoldman.beans.MetricDownloaded;
 import net.wiseoldman.beans.NameChangeEntry;
 import net.wiseoldman.beans.ParticipantWithStanding;
 import net.wiseoldman.beans.RoleIndex;
@@ -162,9 +163,9 @@ public class WomClient
 	private HttpUrl buildUrl(String[] pathSegments)
 	{
 		HttpUrl.Builder urlBuilder = new HttpUrl.Builder()
-			.scheme("https")
-			.host("api.wiseoldman.net")
-			.addPathSegment(this.plugin.isSeasonal ? "league" : "v2");
+			.scheme("http")
+			.host("localhost")
+			.port(5000);
 
 		for (String pathSegment : pathSegments)
 		{
@@ -443,5 +444,26 @@ public class WomClient
 		Request request = createRequest(new Object(), "players", username);
 		sendRequest(request, r -> future.complete(parseResponse(r, PlayerInfo.class, true)), future::completeExceptionally);
 		return future;
+	}
+
+	private void metricsCallback(Response response)
+	{
+		if (response.isSuccessful())
+		{
+			MetricDownloaded metrics = parseResponse(response, MetricDownloaded.class);
+			System.out.println(metrics);
+		}
+		else
+		{
+			WomStatus data = parseResponse(response, WomStatus.class);
+			String message = "Error: " + data.getMessage();
+			sendResponseToChat(message, ERROR);
+		}
+	}
+
+	public void fetchMetrics()
+	{
+		Request request = createRequest("metrics");
+		sendRequest(request, r -> metricsCallback(r));
 	}
 }
