@@ -961,6 +961,10 @@ public class WomUtilsPlugin extends Plugin
 
 				recentlyLoggedIn = true;
 				isSeasonal = client.getWorldType().contains(WorldType.SEASONAL);
+
+				clientThread.invokeLater(() -> {
+					womClient.compareClanLists(groupMembers);
+				});
 				break;
 			case LOGIN_SCREEN:
 				// When a player logs out we want to set these variables
@@ -1076,6 +1080,8 @@ public class WomUtilsPlugin extends Plugin
 			groupMembers.put(member.getPlayer().getUsername(), member);
 		}
 		onGroupUpdate();
+
+		// When clicking the sync button, we show the user the syncing result.
 		if (!event.isSilent())
 		{
 			String message = compareChanges(old, groupMembers);
