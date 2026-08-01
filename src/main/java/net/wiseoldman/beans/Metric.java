@@ -140,6 +140,8 @@ public enum Metric
 	PVP_ARENA(HiscoreSkill.PVP_ARENA_RANK),
 	@SerializedName("league_points")
 	LEAGUE_POINTS(HiscoreSkill.LEAGUE_POINTS),
+	@SerializedName("mad_angel")
+	MAD_ANGEL(HiscoreSkill.MAD_ANGEL),
 	@SerializedName("maggot_king")
 	MAGGOT_KING(HiscoreSkill.MAGGOT_KING),
 	@SerializedName("magic")
